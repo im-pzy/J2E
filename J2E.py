@@ -6,8 +6,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, \
     QShortcut
 from PyQt5.QtCore import Qt, QStandardPaths, pyqtSignal
 from PyQt5.QtGui import QIcon
-import json
-import xlsxwriter
+from xlsxwriter import Workbook
+import json, os
 
 DEFAULT_JSON_DATA = []
 DEFAULT_DATA_INFO = (0, 0)  # (col,row)
@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
 
     def initUI(self):
         self.setWindowTitle("JsonArray转Excel工具")
-        self.setWindowIcon(QIcon("icons/J2E.ico"))
+        self.setWindowIcon(QIcon(os.path.join(os.path.dirname(__file__), "icons/J2E.ico")))
         self.resize(1000, 500)
         self.centralWidget = QWidget(self)  # 中心部件和布局
         self.setCentralWidget(self.centralWidget)
@@ -157,13 +157,13 @@ class EditBox(QPlainTextEdit):
     def onContextMenu(self, position):
         menu = QMenu(self)
         copyAction = menu.addAction("复制")
-        copyAction.setIcon(QIcon("./icons/copy.png"))
+        copyAction.setIcon(QIcon(os.path.join(os.path.dirname(__file__), "./icons/copy.png")))
         copyAction.triggered.connect(self.copy)
         cutAction = menu.addAction("剪切")
-        cutAction.setIcon(QIcon("./icons/cut.png"))
+        cutAction.setIcon(QIcon(os.path.join(os.path.dirname(__file__), "./icons/cut.png")))
         cutAction.triggered.connect(self.cut)
         pasteAction = menu.addAction("粘贴")
-        pasteAction.setIcon(QIcon("./icons/paste.png"))
+        pasteAction.setIcon(QIcon(os.path.join(os.path.dirname(__file__), "./icons/paste.png")))
         pasteAction.triggered.connect(self.paste)
         menu.exec_(self.viewport().mapToGlobal(position))
 
@@ -366,7 +366,7 @@ class OutputExcelButton(QPushButton):
             "Excel文件(*.xlsx);;csv文件(逗号分隔)(*.csv);;txt文件(*.txt)")
         if filename:
             if fileFilter == "Excel文件(*.xlsx)":
-                workbook = xlsxwriter.Workbook(filename)
+                workbook = Workbook(filename)
                 worksheet = workbook.add_worksheet()
                 textFormat = workbook.add_format({'num_format': '@'})  # 单元格纯文本格式
                 headers = self.dataModel.fields
