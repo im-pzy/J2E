@@ -4,7 +4,7 @@
 
 **nuitka打包命令：**
 ```
-nuitka --standalone --onefile --windows-console-mode=disable --enable-plugin=pyqt5 --include-package=xlsxwriter --windows-icon-from-ico=".\icons\J2E.ico" --include-data-files=".\icons\*=icons/" J2E.py
+nuitka --standalone --onefile --windows-console-mode="disable" --enable-plugin="pyqt5" --windows-icon-from-ico=".\icons\J2E.ico" --include-data-files=./icons/*=icons/ --product-version="1.0" J2E.py
 ```
 
 # 有待改进之处
